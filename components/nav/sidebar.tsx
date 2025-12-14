@@ -23,9 +23,9 @@ const adminNavItem = {
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const userRole = (session?.user as any)?.role;
-  const isAdmin = userRole === "ADMIN";
+  const isAdmin = status === "authenticated" && userRole === "ADMIN";
 
   const itemsToShow = isAdmin ? [...navItems, adminNavItem] : navItems;
 

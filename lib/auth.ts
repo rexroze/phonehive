@@ -76,10 +76,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       // Allow all sign-ins
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       if (user) {
         token.id = user.id;
         token.role = (user as any).role;
+      }
+      // Always fetch the latest role from database to ensure it's up to date
+      // This is especially important when an admin changes a user's role
+      if (token.id) {
+        const dbUser = await prisma.user.findUnique({
+          where: { id: token.id as string },
+          select: { role: true },
+        });
+        if (dbUser) {
+          token.role = dbUser.role;
+        }
       }
       return token;
     },

@@ -3,18 +3,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 export function SettingsPanel({ user }: { user: any }) {
-  const router = useRouter();
-
   async function handleSignOut() {
     try {
-      await fetch("/api/auth/signout", { method: "POST" });
-      router.push("/auth/signin");
-      router.refresh();
+      await signOut({ callbackUrl: "/auth/signin", redirect: true });
     } catch (error) {
-      console.error("Sign out failed");
+      console.error("Sign out failed", error);
     }
   }
 

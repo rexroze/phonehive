@@ -22,9 +22,9 @@ const adminNavItem = {
 
 export function MobileNav() {
   const pathname = usePathname();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const userRole = (session?.user as any)?.role;
-  const isAdmin = userRole === "ADMIN";
+  const isAdmin = status === "authenticated" && userRole === "ADMIN";
 
   // For mobile, we'll show a subset of items to fit the screen
   // Show Dashboard, Inventory, AI Tools, Expenses, and Admin (if admin) or Settings
