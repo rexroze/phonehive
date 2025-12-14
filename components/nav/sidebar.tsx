@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Package, Sparkles, Receipt, Settings } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { LayoutDashboard, Package, Sparkles, Receipt, Settings, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NotificationBell } from "./notification-bell";
 
@@ -14,8 +15,19 @@ const navItems = [
   { href: "/settings", icon: Settings, label: "Settings" },
 ];
 
+const adminNavItem = {
+  href: "/admin",
+  icon: Shield,
+  label: "Admin",
+};
+
 export function Sidebar() {
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const userRole = (session?.user as any)?.role;
+  const isAdmin = userRole === "ADMIN";
+
+  const itemsToShow = isAdmin ? [...navItems, adminNavItem] : navItems;
 
   return (
     <aside className="sidebar hidden w-64 min-h-screen border-r bg-background flex-col shrink-0 md:flex">
@@ -23,7 +35,7 @@ export function Sidebar() {
         <h1 className="text-xl font-bold">PhoneHive</h1>
       </div>
       <nav className="flex-1 space-y-1 p-4">
-        {navItems.map((item) => {
+        {itemsToShow.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
           return (

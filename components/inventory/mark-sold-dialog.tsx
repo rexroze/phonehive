@@ -65,7 +65,7 @@ export function MarkSoldDialog({ phone, trigger }: MarkSoldDialogProps) {
           <Button>Mark Sold</Button>
         </DialogTrigger>
       )}
-      <DialogContent>
+      <DialogContent className="!w-[calc(100vw-1rem)] sm:!w-auto">
         <DialogHeader>
           <DialogTitle>Mark Phone as Sold</DialogTitle>
           <DialogDescription>

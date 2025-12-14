@@ -76,9 +76,11 @@ export function AIToolsPanel() {
       alert("Please fill in model");
       return;
     }
+    if (!session?.user?.id) return;
     setLoading(true);
     try {
       const result = await generateTags(
+        session.user.id,
         formData.model,
         formData.storage,
         formData.variant
@@ -122,9 +124,10 @@ export function AIToolsPanel() {
       alert("Please enter a phone model");
       return;
     }
+    if (!session?.user?.id) return;
     setLoading(true);
     try {
-      const result = await getAutoFillInfo(formData.model);
+      const result = await getAutoFillInfo(session.user.id, formData.model);
       setAutoFill(result);
       setFormData({
         ...formData,

@@ -115,12 +115,12 @@ export function AddExpenseDialog({ userId }: { userId: string }) {
           Add Expense
         </Button>
       </DialogTrigger>
-      <DialogContent className="!max-h-[calc(100vh-2rem)] overflow-y-auto">
-        <DialogHeader>
+      <DialogContent className="!max-h-[calc(100vh-2rem)] !w-[calc(100vw-1rem)] sm:!w-auto overflow-hidden flex flex-col">
+        <DialogHeader className="shrink-0">
           <DialogTitle>Add Expense</DialogTitle>
           <DialogDescription>Record a new business expense</DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 overflow-y-auto flex-1 min-h-0">
           <div className="space-y-2">
             <Label htmlFor="title">Title *</Label>
             <Input

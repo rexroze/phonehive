@@ -139,15 +139,18 @@
   transform: translate(-50%, -50%) !important;
   max-width: calc(100vw - 1rem) !important;
   max-height: calc(100vh - 1rem) !important;
+  width: calc(100vw - 1rem) !important;
   margin: 0 !important;
   z-index: 100 !important;
   display: flex !important;
   flex-direction: column !important;
+  overflow: hidden !important;
 }
 
 @media (min-width: 640px) {
   [data-slot="dialog-content"] {
     max-width: 32rem !important;
+    width: auto !important;
     max-height: calc(100vh - 2rem) !important;
   }
 }
@@ -165,4 +168,12 @@
   overflow-x: hidden;
   flex: 1;
   min-height: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent body scroll when dialog is open */
+body:has([data-slot="dialog-content"][data-state="open"]) {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
 }

@@ -80,12 +80,12 @@ export function EditPhoneDialog({ phone, trigger }: EditPhoneDialogProps) {
           </Button>
         </DialogTrigger>
       )}
-      <DialogContent className="!max-h-[calc(100vh-2rem)] overflow-y-auto">
-        <DialogHeader>
+      <DialogContent className="!max-h-[calc(100vh-2rem)] !w-[calc(100vw-1rem)] sm:!w-auto overflow-hidden flex flex-col">
+        <DialogHeader className="shrink-0">
           <DialogTitle>Edit Phone</DialogTitle>
           <DialogDescription>Update phone information</DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4 pr-1">
+        <form onSubmit={handleSubmit} className="space-y-4 pr-1 overflow-y-auto flex-1 min-h-0">
           <div className="space-y-2">
             <Label htmlFor="name">Phone Model *</Label>
             <Input

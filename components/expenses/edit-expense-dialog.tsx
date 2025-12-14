@@ -107,12 +107,12 @@ export function EditExpenseDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="!max-h-[calc(100vh-2rem)] overflow-y-auto">
-        <DialogHeader>
+      <DialogContent className="!max-h-[calc(100vh-2rem)] !w-[calc(100vw-1rem)] sm:!w-auto overflow-hidden flex flex-col">
+        <DialogHeader className="shrink-0">
           <DialogTitle>Edit Expense</DialogTitle>
           <DialogDescription>Update expense details</DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 overflow-y-auto flex-1 min-h-0">
           <div className="space-y-2">
             <Label htmlFor="edit-title">Title *</Label>
             <Input
