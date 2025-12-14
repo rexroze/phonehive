@@ -27,13 +27,14 @@ export function MobileNav() {
   const isAdmin = status === "authenticated" && userRole === "ADMIN";
 
   // For mobile, we'll show a subset of items to fit the screen
-  // Show Dashboard, Inventory, AI Tools, Expenses, and Admin (if admin) or Settings
+  // Show Dashboard, Inventory, AI Tools, Expenses, Settings, and Admin (if admin)
   const mobileItems = [
     { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
     { href: "/inventory", icon: Package, label: "Inventory" },
     { href: "/ai-tools", icon: Sparkles, label: "AI Tools" },
     { href: "/expenses", icon: Receipt, label: "Expenses" },
-    ...(isAdmin ? [adminNavItem] : [{ href: "/settings", icon: Settings, label: "Settings" }]),
+    { href: "/settings", icon: Settings, label: "Settings" },
+    ...(isAdmin ? [adminNavItem] : []),
   ];
 
   return (

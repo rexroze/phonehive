@@ -8,9 +8,17 @@ import { signOut } from "next-auth/react";
 export function SettingsPanel({ user }: { user: any }) {
   async function handleSignOut() {
     try {
-      await signOut({ callbackUrl: "/auth/signin", redirect: true });
+      // Sign out without redirect first to clear session
+      await signOut({ 
+        callbackUrl: "/auth/signin", 
+        redirect: false 
+      });
+      // Force a hard redirect to ensure it works
+      window.location.href = "/auth/signin";
     } catch (error) {
       console.error("Sign out failed", error);
+      // Fallback redirect on error
+      window.location.href = "/auth/signin";
     }
   }
 
