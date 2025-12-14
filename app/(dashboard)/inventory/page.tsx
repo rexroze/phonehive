@@ -7,13 +7,13 @@ import { InventoryFilters } from "@/components/inventory/inventory-filters";
 export default async function InventoryPage({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }> | { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const session = await auth();
   if (!session?.user?.id) return null;
 
-  // Handle searchParams as Promise (Next.js 15) or object (Next.js 14)
-  const params = searchParams instanceof Promise ? await searchParams : searchParams;
+  // Await searchParams (Next.js 15+)
+  const params = await searchParams;
 
   const filters = {
     status: typeof params.status === "string" && params.status !== "all" ? params.status : undefined,

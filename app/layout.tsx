@@ -16,12 +16,38 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "PhoneHive - Phone Buy & Sell Dashboard",
   description: "Manage your phone inventory and sales",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "PhoneHive",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    siteName: "PhoneHive",
+    title: "PhoneHive - Phone Buy & Sell Dashboard",
+    description: "Manage your phone inventory and sales",
+  },
+  icons: {
+    icon: [
+      { url: "/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icon-192x192.png", sizes: "192x192", type: "image/png" },
+    ],
+  },
 };
 
 export const viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
+  themeColor: "#000000",
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

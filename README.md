@@ -1,39 +1,24 @@
-# PhoneHive - Phone Buy & Sell Dashboard
+# PhoneHive
 
-A production-ready, mobile-friendly web dashboard for managing your phone buy & sell business. Built with Next.js 14, Prisma, and modern web technologies.
+A comprehensive phone inventory and sales management system with PWA support.
 
 ## Features
 
-- ✅ **Authentication** - Credential login and Google OAuth support
-- ✅ **Inventory Management** - Add, edit, and track phones with images
-- ✅ **Dashboard Analytics** - Revenue, profit, and expense tracking with charts
-- ✅ **AI Tools** - Generate captions, tags, and price suggestions using Gemini API
-- ✅ **Expense Tracking** - Log and categorize business expenses
-- ✅ **Aging Item Notifications** - Automatic alerts for items in stock > 30 days
-- ✅ **Export Functionality** - Export inventory, expenses, and sales to Excel
-- ✅ **Mobile Responsive** - Fully responsive UI with bottom navigation
-
-## Tech Stack
-
-- **Next.js 14** (App Router, Server Actions, TypeScript)
-- **Prisma ORM** with Neon PostgreSQL
-- **Prisma Accelerate** (for Vercel compatibility)
-- **Auth.js (NextAuth)** for authentication
-- **Shadcn UI** + Tailwind CSS
-- **UploadThing** for image uploads
-- **Gemini API** for AI features
-- **Recharts** for dashboard analytics
-- **Vercel** for deployment
+- 📱 **Phone Inventory Management** - Track phones, conditions, prices, and sales
+- 💰 **Expense Tracking** - Monitor business expenses by category
+- 🤖 **AI Tools** - Generate captions, tags, and price suggestions using Google Gemini
+- 📊 **Analytics Dashboard** - View sales statistics and insights
+- 🔐 **Authentication** - Secure email/password authentication
+- 📱 **PWA Support** - Install and use on mobile devices
+- 🎨 **Modern UI** - Beautiful, responsive design with Tailwind CSS
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js 18+ and npm
-- A Neon PostgreSQL database
-- UploadThing account
-- Google OAuth credentials (optional)
-- Gemini API key
+- PostgreSQL database (Neon, Supabase, or any PostgreSQL provider)
+- Environment variables configured
 
 ### Installation
 
@@ -51,26 +36,13 @@ npm install
 3. Set up environment variables:
 ```bash
 cp .env.example .env
+# Edit .env with your configuration
 ```
-
-Edit `.env` and add your credentials:
-```env
-DATABASE_URL="your-neon-database-url"
-AUTH_SECRET="generate-with-openssl-rand-base64-32"
-UPLOADTHING_SECRET="your-uploadthing-secret"
-UPLOADTHING_APP_ID="your-uploadthing-app-id"
-GEMINI_API_KEY="your-gemini-api-key"
-GOOGLE_CLIENT_ID="your-google-client-id" # Optional
-GOOGLE_CLIENT_SECRET="your-google-client-secret" # Optional
-CRON_SECRET="your-cron-secret" # For Vercel cron jobs
-```
-
-**Note:** For Neon, you only need one connection string. Copy the connection string from your Neon dashboard and use it for `DATABASE_URL`. The same URL will be used for both regular and direct connections.
 
 4. Set up the database:
 ```bash
-npx prisma generate
 npx prisma db push
+npx prisma generate
 ```
 
 5. Run the development server:
@@ -80,99 +52,100 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Deployment to Vercel
+## Environment Variables
 
-### Step 1: Push Prisma Schema to Neon
+Required environment variables:
 
-1. Make sure your `DATABASE_URL` is set (copy from Neon dashboard)
-2. Run migrations:
-```bash
-npx prisma migrate deploy
+```env
+# Database
+DATABASE_URL="postgresql://..."
+
+# NextAuth
+AUTH_SECRET="your-secret-key-min-32-characters"
+AUTH_URL="http://localhost:3000"  # Update for production
+
+# UploadThing (optional, for image uploads)
+UPLOADTHING_SECRET="your-secret"
+UPLOADTHING_APP_ID="your-app-id"
+
+# Google Gemini API (optional, for AI features)
+GEMINI_API_KEY="your-api-key"
 ```
 
-### Step 2: Deploy to Vercel
+## Deployment
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions to Vercel.
+
+### Quick Deploy to Vercel
 
 1. Push your code to GitHub
-2. Import your project in Vercel
-3. Add all environment variables in Vercel dashboard:
-   - `DATABASE_URL` (your Neon connection string)
-   - `AUTH_SECRET`
-   - `UPLOADTHING_SECRET`
-   - `UPLOADTHING_APP_ID`
-   - `GEMINI_API_KEY`
-   - `GOOGLE_CLIENT_ID` (optional)
-   - `GOOGLE_CLIENT_SECRET` (optional)
-   - `CRON_SECRET`
-
+2. Import to Vercel
+3. Add environment variables
 4. Deploy!
 
-### Step 3: Configure Vercel Cron
+## PWA Installation
 
-The cron job is already configured in `vercel.json`. After deployment:
+After deployment, you can install PhoneHive as a Progressive Web App:
 
-1. Go to your Vercel project settings
-2. Navigate to "Cron Jobs"
-3. The cron job should appear automatically
-4. Set the `CRON_SECRET` environment variable
-5. The cron will run daily at midnight UTC
+### Android (Chrome)
+1. Open the site in Chrome
+2. Tap the menu (three dots)
+3. Select "Add to Home screen"
+4. Confirm installation
 
-### Step 4: Set up UploadThing
+### iOS (Safari)
+1. Open the site in Safari
+2. Tap the Share button
+3. Select "Add to Home Screen"
+4. Confirm installation
 
-1. Create an account at [uploadthing.com](https://uploadthing.com)
-2. Create a new app
-3. Copy your `UPLOADTHING_SECRET` and `UPLOADTHING_APP_ID`
-4. Add them to your Vercel environment variables
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router)
+- **Database:** PostgreSQL with Prisma ORM
+- **Authentication:** NextAuth.js v5
+- **UI:** Tailwind CSS, Radix UI
+- **PWA:** next-pwa
+- **AI:** Google Gemini API
+- **File Upload:** UploadThing
 
 ## Project Structure
 
 ```
 phonehive/
-├── app/
-│   ├── (dashboard)/          # Protected dashboard routes
-│   │   ├── dashboard/         # Analytics dashboard
-│   │   ├── inventory/         # Phone inventory management
-│   │   ├── ai-tools/          # AI tools page
-│   │   ├── expenses/          # Expense tracking
-│   │   ├── notifications/    # Notifications page
-│   │   └── settings/          # Settings page
-│   ├── api/
-│   │   ├── auth/              # NextAuth routes
-│   │   ├── uploadthing/       # UploadThing routes
-│   │   ├── export/            # Export API routes
-│   │   └── cron/              # Cron job routes
-│   ├── actions/               # Server actions
-│   └── auth/                  # Auth pages
-├── components/
-│   ├── ui/                    # Shadcn UI components
-│   ├── inventory/             # Inventory components
-│   ├── ai/                    # AI tools components
-│   ├── expenses/              # Expense components
-│   ├── notifications/         # Notification components
-│   └── nav/                   # Navigation components
-├── lib/                       # Utility functions
-├── prisma/
-│   └── schema.prisma          # Database schema
-└── types/                     # TypeScript types
+├── app/                    # Next.js app directory
+│   ├── (dashboard)/       # Dashboard routes
+│   ├── api/               # API routes
+│   └── auth/              # Authentication pages
+├── components/            # React components
+├── lib/                   # Utilities and configurations
+├── prisma/                # Database schema
+└── public/                # Static assets
 ```
 
-## Database Models
+## Development
 
-- **User** - User accounts with roles (FREE, PREMIUM, ADMIN)
-- **Phone** - Phone inventory items
-- **Expense** - Business expenses
-- **Notification** - User notifications
-- **Account** - OAuth accounts (NextAuth)
-- **Session** - User sessions (NextAuth)
+### Build for Production
 
-## Free Tier Limits
+```bash
+npm run build
+npm start
+```
 
-- Maximum 30 phones in stock
-- AI tools limited after quota (extendable for premium)
+### Database Migrations
+
+```bash
+# Push schema changes
+npx prisma db push
+
+# Generate Prisma Client
+npx prisma generate
+```
 
 ## License
 
-MIT
+Private - All rights reserved
 
 ## Support
 
-For issues and questions, please open an issue on GitHub.
+For issues or questions, please check the deployment guide or open an issue.

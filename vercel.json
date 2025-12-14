@@ -1,9 +1,5 @@
 {
-  "crons": [
-    {
-      "path": "/api/cron/check-aging-phones",
-      "schedule": "0 0 * * *"
-    }
-  ]
+  "buildCommand": "npm run build -- --webpack",
+  "framework": "nextjs",
+  "installCommand": "npm install"
 }
-
